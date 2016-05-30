@@ -99,6 +99,35 @@
 
 
 
+
+      /***********************************************************
+        EXPERIMENTS
+      ***********************************************************/
+
+      var cubeMaterialArray = [];
+      // order to add materials: x+,x-,y+,y-,z+,z-
+      cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0xff3333 } ) );
+      cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0xff8800 } ) );
+      cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0xffff33 } ) );
+      cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0x33ff33 } ) );
+      cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0x3333ff } ) );
+      cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0x8833ff } ) );
+      var cubeMaterials = new THREE.MeshFaceMaterial( cubeMaterialArray );
+      // Cube params: width(x), height(y), depth(z)
+      //  optional - segments along x, y, z
+      var cubeGeometry = new THREE.CubeGeometry( 50, 50, 50, 1,1 ,1);
+
+      // using THREE.MeshFaceMaterial() in the constructor below
+      //   causes the mesh to use the materials stored in the geometry
+      cube = new THREE.Mesh( cubeGeometry, cubeMaterials );
+      cube.position.set(100, 140, 100);
+      scene.add( cube );
+
+
+
+
+
+
       /*************************************************
         Digital Elevation Model
       *************************************************/
@@ -125,7 +154,7 @@
       terrainLoader.load(terrainURL, function(data) {
           // Adjust each vertex in the plane to correspond to the height value in the DEM file
           for (var i=0, l = geometry.vertices.length; i < l; i++) {
-            geometry.vertices[i].z = data[i] / 65535 * 100;
+            geometry.vertices[i].z = (data[i] / 65535 * 100);
           }
           // objects in THREE need both geometry and material - texture loader
           var textureLoader = new THREE.TextureLoader();
@@ -172,11 +201,6 @@
 
       var ambiLight = new THREE.AmbientLight(0x999999);
       scene.add(ambiLight);
-
-
-
-
-
 
 
 
