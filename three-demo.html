@@ -157,13 +157,12 @@
 
       scene.add(dirLight);
 
-      /*   not working
       // a floating light?
-        var light = new THREE.PointLight(0x999999, 2, 100);
-        light.position.set(-1, 1, 1);
-        scene.add(light);
+        var light = new THREE.PointLight(0x999999, 12, 100);
+        light.position.set(-1, 1, 100);
+        //scene.add(light);
 
-
+/*
       */
 
       /*******************************************************
@@ -173,10 +172,34 @@
       var ambiLight = new THREE.AmbientLight(0x999999);
       scene.add(ambiLight);
 
+      /*******************************************************
+        movement controls
+      *******************************************************/
+
+      // WASD-style movement controls
+      var controls = new THREE.FlyControls(camera);
+
+      // Disable auto forward movement
+      //controls.autoForward = false;
+
+      // click and drag to look around
+      controls.dragToLook = true;
+
+
+      // Movement and roll speeds, adjust these and see what happens!
+      controls.movementSpeed = 60;
+      controls.rollSpeed = Math.PI / 12;
 
 
 
       function render() {
+
+
+        // Get the difference from when the clock was last updated and update the
+        // controls based on that value.
+        var delta = clock.getDelta();
+        controls.update(delta);
+
 
         // Call the render function again and again
         requestAnimationFrame( render );
