@@ -121,14 +121,14 @@
 
 
       var cubes = [];
-      for (var i=0; i<12; i++) {
+      for (var i=0; i<100; i++) {
 
 
         // using THREE.MeshFaceMaterial() in the constructor below
         //   causes the mesh to use the materials stored in the geometry
         var cube = new THREE.Mesh( cubeGeometry, cubeMaterials );
         //cube.position.set(100, 140, 100);
-        cube.position.set(100 + Math.random() * 1000, 140 + Math.random() * 1000, 100 + Math.random()* 900 * i);
+        cube.position.set(100 + Math.random() * 1000, 140 + Math.random() * 2000, 100 + Math.random()* 900 * i);
         //cube.rotateX(Math.random() * 10);
         //cube.rotateY(Math.random() * 10);
         cube.userData = { rotateX: (Math.random() - 0.5) / 10,
