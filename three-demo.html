@@ -104,6 +104,7 @@
         EXPERIMENTS
       ***********************************************************/
 
+
       var cubeMaterialArray = [];
       // order to add materials: x+,x-,y+,y-,z+,z-
       cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0xff3333 } ) );
@@ -117,13 +118,27 @@
       //  optional - segments along x, y, z
       var cubeGeometry = new THREE.CubeGeometry( 50, 50, 50, 1,1 ,1);
 
-      // using THREE.MeshFaceMaterial() in the constructor below
-      //   causes the mesh to use the materials stored in the geometry
-      cube = new THREE.Mesh( cubeGeometry, cubeMaterials );
-      cube.position.set(100, 140, 100);
-      scene.add( cube );
 
 
+      var cubes = [];
+      for (var i=0; i<12; i++) {
+
+
+        // using THREE.MeshFaceMaterial() in the constructor below
+        //   causes the mesh to use the materials stored in the geometry
+        var cube = new THREE.Mesh( cubeGeometry, cubeMaterials );
+        //cube.position.set(100, 140, 100);
+        cube.position.set(100 + Math.random() * 1000, 140 + Math.random() * 1000, 100 + Math.random()* 900 * i);
+        //cube.rotateX(Math.random() * 10);
+        //cube.rotateY(Math.random() * 10);
+        cube.userData = { rotateX: (Math.random() - 0.5) / 10,
+                          rotateY: (Math.random() - 0.5) / 10,
+                          rotateZ: Math.random() / 20
+        }
+
+        cubes.push( cube );
+        scene.add( cube );
+      }
 
 
 
@@ -250,6 +265,9 @@
         var delta = clock.getDelta();
         controls.update(delta);
 
+        // update cube positions
+        dropCubes(cubes);
+
 
         // Call the render function again and again
         requestAnimationFrame( render );
@@ -259,6 +277,22 @@
 
       render();
 
+
+
+      function dropCubes(cubes) {
+        cubes.forEach(function(cube) {
+          if (cube.position.z < 0) {
+            cube.position.z = cube.position.z + 8000;
+          } else {
+            cube.position.z = cube.position.z - 10;
+          }
+          // and rotate
+          cube.rotateX(cube.userData.rotateX);
+          cube.rotateY(cube.userData.rotateY);
+          cube.rotateZ(cube.userData.rotateZ);
+
+        });
+      }
     </script>
 
 </body>
