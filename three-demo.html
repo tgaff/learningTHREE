@@ -17,7 +17,7 @@
     <script>
     WebVRConfig = {
       // Forces availability of VR mode.
-      FORCE_ENABLE_VR: false,
+      FORCE_ENABLE_VR: true,
     };
     </script>
     <!-- Assets we'll need - Three.js, controls, and the webVR manager and polyfill -->
@@ -54,7 +54,7 @@
 
 
       // position the camera slightly above and in front of the scene
-      camera.position.set(0, -199, 300);
+      camera.position.set(0, -199, 200);
       camera.up = new THREE.Vector3(0,0,1);
 
       // Look at the center of the scene
@@ -165,8 +165,6 @@
         light.position.set(-1, 1, 100);
         //scene.add(light);
 
-/*
-      */
 
       /*******************************************************
         ambient lighting
@@ -175,6 +173,19 @@
       var ambiLight = new THREE.AmbientLight(0x999999);
       scene.add(ambiLight);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
       /*******************************************************
         movement controls
       *******************************************************/
@@ -182,8 +193,6 @@
 
       /***************************************************************
         mobile controls
-
-
       ***************************************************************/
       // Detect mobile devices in the user agent
       var is_mobile= /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
