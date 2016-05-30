@@ -31,6 +31,9 @@
     <script src="js/webvr-manager.js"></script>
 
     <script>
+
+      // based on https://github.com/datadesk/vr-interactives-three-js
+
       var WINDOW_WIDTH = window.innerWidth;
       var WINDOW_HEIGHT = window.innerHeight;
 
@@ -51,7 +54,7 @@
 
 
       // position the camera slightly above and in front of the scene
-      camera.position.set(0, -199, 75);
+      camera.position.set(0, -199, 300);
       camera.up = new THREE.Vector3(0,0,1);
 
       // Look at the center of the scene
@@ -180,7 +183,7 @@
       var controls = new THREE.FlyControls(camera);
 
       // Disable auto forward movement
-      //controls.autoForward = false;
+      controls.autoForward = false;
 
       // click and drag to look around
       controls.dragToLook = true;
@@ -188,7 +191,7 @@
 
       // Movement and roll speeds, adjust these and see what happens!
       controls.movementSpeed = 60;
-      controls.rollSpeed = Math.PI / 12;
+      controls.rollSpeed = Math.PI / 4;
 
 
 
