@@ -51,7 +51,7 @@
 
 
       // position the camera slightly above and in front of the scene
-      camera.position.et(0, -199, 75);
+      camera.position.set(0, -199, 75);
       camera.up = new THREE.Vector3(0,0,1);
 
       // Look at the center of the scene
@@ -89,6 +89,64 @@
 
       // manager
       var manager = new WebVRManager(renderer, effect);
+
+      console.log('woo');
+
+
+
+
+
+      /*************************************************
+        Digital Elevation Model
+      *************************************************/
+
+      // URL to our DEM resource
+      var terrainURL = "data/Gale_HRSC_DEM_50m_300x285.bin";
+
+      // Utility to load the DEM data
+      var terrainLoader = new THREE.TerrainLoader();
+
+      // We'll need this later
+      var surface;
+
+      // Create the plane geometry
+      /* In the line below, we also create a PlaneGeometry(width, height, widthSegments, heightSegments).
+         You'll see four arguments - these are the width and height of the "world" that we defined above,
+         and the number of vertices the plane will have. We set these two values to 299 and 284 -
+         the same dimensions as the DEM data, except that it's zero-indexed.
+        */
+      var geometry = new THREE.PlaneGeometry(WORLD_WIDTH, WORLD_HEIGHT, 299,284);
+
+      // The terrainLoader loads the DEM file and defines a function to be called when the file
+      // is successfully downloaded.
+      terrainLoader.load(terrainURL, function(data) {
+          // Adjust each vertex in the plane to correspond to the height value in the DEM file
+          for (var i=0, l = geometry.vertices.length; i < l; i++) {
+            geometry.vertices[i].z = data[i] / 65535 * 100;
+          }
+          // objects in THREE need both geometry and material - texture loader
+          var textureLoader = new THREE.TextureLoader();
+          var textureURL = "data/Gale_texture_high_4096px.jpg";
+
+          /*
+          Remember the geometry is the shape of an object, and the material is what that
+          object is made out of? Well think of a texture map as a paint job, or "skin" on
+          an object. It's basically an image mapped onto an object's surface.
+          */
+          textureLoader.load(textureURL, function(texture) {
+            var material = new THREE.MeshLambertMaterial({
+              map: texture
+            });
+
+
+            // ok now load it all into the scene once we have the texture and the geometry
+            // Create surface mesh and add it to the scene
+            surface = new THREE.Mesh(geometry, material);
+            scene.add(surface);
+          });
+      });
+
+
 
 
 
