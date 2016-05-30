@@ -1,0 +1,15 @@
+{
+  "name": "learning3",
+  "version": "1.0.0",
+  "description": "learning 3.js by play",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:tgaff/learningTHREE.git"
+  },
+  "author": "tgaff",
+  "license": "ISC"
+}
