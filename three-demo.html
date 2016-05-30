@@ -147,8 +147,44 @@
       });
 
 
+      /*******************************************************
+        lighting
+      *******************************************************/
 
 
+      var dirLight = new THREE.DirectionalLight( 0xffffff, 0.75)
+      dirLight.position.set( -1, 1, 100).normalize();
+
+      scene.add(dirLight);
+
+      /*   not working
+      // a floating light?
+        var light = new THREE.PointLight(0x999999, 2, 100);
+        light.position.set(-1, 1, 1);
+        scene.add(light);
+
+
+      */
+
+      /*******************************************************
+        ambient lighting
+      *******************************************************/
+
+      var ambiLight = new THREE.AmbientLight(0x999999);
+      scene.add(ambiLight);
+
+
+
+
+      function render() {
+
+        // Call the render function again and again
+        requestAnimationFrame( render );
+
+        manager.render(scene, camera);
+      }
+
+      render();
 
     </script>
 
