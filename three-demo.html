@@ -31,7 +31,66 @@
     <script src="js/webvr-manager.js"></script>
 
     <script>
-    // We'll start writing code here
+      var WINDOW_WIDTH = window.innerWidth;
+      var WINDOW_HEIGHT = window.innerHeight;
+
+      // width and height of the surface we're gonna create
+      var WORLD_WIDTH = 2000;
+      var WORLD_HEIGHT = 1900;
+
+
+      // ok, now make the scene
+      var scene = new THREE.Scene();
+
+      // Keeps track of time
+      var clock = new THREE.Clock();
+
+      // How we will see the scene
+      // PerspectiveCamera(fieldOfView in degrees, aspect ratio, nearest seeable dist, farthest visible dist)
+      var camera = new THREE.PerspectiveCamera(75, WINDOW_WIDTH / WINDOW_HEIGHT, 1, 5000);
+
+
+      // position the camera slightly above and in front of the scene
+      camera.position.et(0, -199, 75);
+      camera.up = new THREE.Vector3(0,0,1);
+
+      // Look at the center of the scene
+      camera.lookAt(scene.position);
+
+      /* * * * * * * *  * * * * * * * * *  * * * * *  * * * * * *  *
+      // now we create a webGL renderer to render our lovely graphics
+      * * * * * * * * * * * * * * * * *  * * * * * *  * * * * * * * */
+
+      var renderer = new THREE.WebGLRenderer({antialias: true});
+
+      // Set the pixel ratio of the screen (for high DPI screens)  (boilerplate)
+      renderer.setPixelRatio(window.devicePixelRatio);
+
+      // Set the background of the scene to orangey-red
+      renderer.setClearColor(0xffd4a6);
+
+      // Set the renderer to the size of the window
+      renderer.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+      // Append the renderer to the DOM
+      document.body.appendChild( renderer.domElement );
+
+
+
+      /************************************************
+        turn on the VR stereoscopic stuff and add a
+        manager to let us control it
+        **********************************************/
+
+
+      // Apply VR stereo rendering to renderer
+      var effect = new THREE.VREffect(renderer);
+      effect.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+
+      // manager
+      var manager = new WebVRManager(renderer, effect);
+
+
 
     </script>
 
