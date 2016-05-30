@@ -17,7 +17,7 @@
     <script>
     WebVRConfig = {
       // Forces availability of VR mode.
-      FORCE_ENABLE_VR: true,
+//      FORCE_ENABLE_VR: true,
     };
     </script>
     <!-- Assets we'll need - Three.js, controls, and the webVR manager and polyfill -->
@@ -54,12 +54,12 @@
 
 
       // position the camera slightly above and in front of the scene
-      camera.position.set(0, -199, 200);
+      camera.position.set(-100, -199, 200);
       camera.up = new THREE.Vector3(0,0,1);
 
       // Look at the center of the scene
-      camera.lookAt(scene.position);
-
+      //camera.lookAt(scene.position);
+      camera.lookAt(new THREE.Vector3(200,200,300))
       /* * * * * * * *  * * * * * * * * *  * * * * *  * * * * * *  *
       // now we create a webGL renderer to render our lovely graphics
       * * * * * * * * * * * * * * * * *  * * * * * *  * * * * * * * */
@@ -108,8 +108,8 @@
       var cubeMaterialArray = [];
       // order to add materials: x+,x-,y+,y-,z+,z-
       cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0xff3333 } ) );
-      cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0xff8800 } ) );
-      cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0xffff33 } ) );
+      cubeMaterialArray.push( new THREE.MeshPhongMaterial( { color: 0xff8800, specular: 0xff8800, shininess: 50 } ) );
+      cubeMaterialArray.push( new THREE.MeshPhongMaterial( { color: 0xffff33  } ) );
       cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0x33ff33 } ) );
       cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0x3333ff } ) );
       cubeMaterialArray.push( new THREE.MeshBasicMaterial( { color: 0x8833ff } ) );
@@ -199,15 +199,15 @@
       *******************************************************/
 
 
-      var dirLight = new THREE.DirectionalLight( 0xffffff, 0.75)
-      dirLight.position.set( -1, 1, 100).normalize();
+      var dirLight = new THREE.DirectionalLight( 0xcc4400, 0.65)
+      dirLight.position.set( -100, 100, 400).normalize();
 
       scene.add(dirLight);
 
-      // a floating light?
-        var light = new THREE.PointLight(0x999999, 12, 100);
-        light.position.set(-1, 1, 100);
-        //scene.add(light);
+      // a light bulb
+  //    var light = new THREE.PointLight(0xff0000, 12, 100);
+ //     light.position.set(-1, 1, 200);
+//      scene.add(light);
 
 
       /*******************************************************
