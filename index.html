@@ -66,6 +66,13 @@
 
       var renderer = new THREE.WebGLRenderer({antialias: true});
 
+      renderer.shadowMapEnabled	= true;
+      renderer.shadowMapType 		= THREE.PCFSoftShadowMap;
+
+
+
+
+
       // Set the pixel ratio of the screen (for high DPI screens)  (boilerplate)
       renderer.setPixelRatio(window.devicePixelRatio);
 
@@ -119,28 +126,72 @@
       var cubeGeometry = new THREE.CubeGeometry( 50, 50, 50, 1,1 ,1);
 
 
-
       var cubes = [];
       for (var i=0; i<100; i++) {
-
 
         // using THREE.MeshFaceMaterial() in the constructor below
         //   causes the mesh to use the materials stored in the geometry
         var cube = new THREE.Mesh( cubeGeometry, cubeMaterials );
         //cube.position.set(100, 140, 100);
-        cube.position.set(100 + Math.random() * 1000, 140 + Math.random() * 2000, 100 + Math.random()* 900 * i);
+        cube.position.set(Math.random() * 900, Math.random() * 1000, 100 + Math.random()* 900 * i);
         //cube.rotateX(Math.random() * 10);
         //cube.rotateY(Math.random() * 10);
         cube.userData = { rotateX: (Math.random() - 0.5) / 10,
                           rotateY: (Math.random() - 0.5) / 10,
                           rotateZ: Math.random() / 20
         }
-
+        cube.castShadow = true;
         cubes.push( cube );
         scene.add( cube );
       }
 
 
+
+      // BIG BOX
+
+
+
+      var geometry = new THREE.BoxGeometry( 200, 200, 20 );
+      //var object = new THREE.Mesh( geometry, new THREE.MeshLambertMaterial( { color: Math.random() * 0xffffff } ) );
+      var object = new THREE.Mesh( geometry, new THREE.MeshPhongMaterial( { color: Math.random() * 0xffffff, shininess: 70 } ) );
+      object.position.set(200, 240, 100);
+      object.castShadow = true;
+      object.receiveShadow = true;
+
+      scene.add(object);
+
+
+
+
+
+      // spotlight #1 -- yellow, dark shadow
+      var spotlight = new THREE.SpotLight(0xffff00);
+      spotlight.position.set(1500,540,400);
+      spotlight.shadowCameraVisible = true;
+      spotlight.shadowDarkness = 0.95;
+      spotlight.intensity = 3;
+      // must enable shadow casting ability for the light
+      spotlight.castShadow = true;
+      scene.add(spotlight);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      scene.fog = new THREE.FogExp2( 0x111111, 0.0015 );
 
 
       /*************************************************
@@ -189,6 +240,10 @@
             // ok now load it all into the scene once we have the texture and the geometry
             // Create surface mesh and add it to the scene
             surface = new THREE.Mesh(geometry, material);
+
+            surface.castShadow = false;
+            surface.receiveShadow = true;
+
             scene.add(surface);
           });
       });
@@ -200,8 +255,8 @@
 
 
       var dirLight = new THREE.DirectionalLight( 0xcc4400, 0.65)
-      dirLight.position.set( -100, 100, 400).normalize();
-
+      dirLight.position.set( 100, 100, 400).normalize();
+      dirLight.castShadow = true;
       scene.add(dirLight);
 
       // a light bulb
